@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './components/HomePage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import HostDashboard from './pages/HostDashboard';
@@ -9,10 +10,11 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/login" Component={Login} />
-        <Route path="/signup" Component={Signup} />
-        <Route path="/host" Component={HostDashboard} />
-        <Route path="/participant" Component={ParticipantDashboard} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/host" element={<HostDashboard />} />
+        <Route path="/participant" element={<ParticipantDashboard />} />
       </Routes>
     </Router>
   );
