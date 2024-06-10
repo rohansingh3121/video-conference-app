@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './config/db';
 import authRoutes from './routes/auth';
+import meetingRoutes from './routes/meeting';
 
 dotenv.config();
 connectDB();
@@ -18,26 +19,37 @@ const io = new Server(server, {
   },
 });
 
-// Use the cors middleware
 app.use(cors({
-  origin: "http://localhost:3000",  // Allow requests from your frontend
+  origin: "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
 
 app.use(express.json());
 app.use('/api/auth', authRoutes);
+app.use('/api/meeting', meetingRoutes);
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  
+  socket.on('join-meeting', (data) => {
+    const { meetingId, participant } = data;
+    socket.join(meetingId);
+    io.to(meetingId).emit('new-participant', participant);
+  });
+
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
+
   socket.on('start-timer', (data) => {
-    io.emit('start-timer', data);
+    const { meetingId, duration } = data;
+    io.to(meetingId).emit('start-timer', duration);
   });
+
   socket.on('raise-hand', (data) => {
-    io.emit('raise-hand', data);
+    const { meetingId, participant } = data;
+    io.to(meetingId).emit('raise-hand', participant);
   });
 });
 
