@@ -27,11 +27,12 @@ Ensure you have the following installed:
 1. Clone the repository:
    ```bash
    git clone https://github.com/rohansingh3121/video-conference-app.git
-2. Navigate to the backend directory and install dependencies:
+2. Replace the placeholder MONGODB-CONNECTION with your actual MongoDB connection string.
+3. Navigate to the backend directory and install dependencies:
    ```bash
    cd backend
    npm install
-3. Open a new terminal, navigate to the frontend directory and install dependencies:
+4. Open a new terminal, navigate to the frontend directory and install dependencies:
    ```bash
    cd frontend
    npm install
